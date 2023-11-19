@@ -2,30 +2,32 @@
 
 
 <main class="col d-flex justify-content-center" >
-   <div class="card text-center justify-content-center mb-3" style="width: 30rem;" style="margin: 0px auto;">
-      <div class="row justify-content-center">
-         <section class="col-9 mt-5 mb-5">
-             <form action="#" method="#" class="text-start" >
-               <div class="mb-3">
-             <label for="exampleInputEmail1" class="form-label">Email Address</label>
-             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
-             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-               </div>
-               <div class="mb-3">
-             <label for="password" class="form-label">Password</label>
-             <input type="password" class="form-control" id="password" name="password">
-               </div>                   
-               <input type="submit" class="btn btn-primary" value="Login">
-               <a href="/signup" class="btn btn-outline-primary">Signup</a>
-             </form>
-          </section>
-       </div>
-   </div>
+  <div class="card text-center justify-content-center mb-3" style="width: 30rem;" style="margin: 0px auto;">
+    <div class="row justify-content-center">
+      <section class="col-9 mt-5 mb-5">  
+        <% if (locals.messages.errors) { %> <% messages.errors.forEach( el => { %>
+          <div class="alert alert-danger"><%= el.msg %></div>
+          <% }) %> <% } %> 
+        <% if (locals.messages.info) { %> <%
+          messages.info.forEach( el => { %>
+          <div class="alert alert-info"><%= el.msg %></div>
+          <% }) %> <% } %>
+        <form action="/login" method="POST" class="text-start" >
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3"><label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>                   <input type="submit" class="btn btn-primary" value="Login">
+          <a href="/signup" class="btn btn-outline-primary">Signup</a>
+        </form>
+      </section>
+    </div>
+  </div>
    
- </main>
+</main>
 
-<div class="card-body">
-   
-</div>
             
 <%- include('partials/footer') -%>
