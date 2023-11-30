@@ -41,6 +41,18 @@ module.exports = {
       })(req, res, next)
    },
 
+   getLogout: (req, res)=>{
+      if(req.user){
+         res.destroy((err) => {
+            if (err)
+              console.log("Error : Failed to destroy the session during logout.", err);
+            req.user = null
+         })
+         req.logout(()=>{console.log("User has logged out.")})
+      }
+      res.redirect("/")
+   },
+
    getSignup: (req,res)=>{
       if(req.user){
          return res.redirect("/profile")
@@ -85,9 +97,9 @@ module.exports = {
             return res.redirect("../signup")
          }
 
-         user.save(User)
+         await user.save()
 
-         req.login(user, (err)=>{
+         await req.login(user, (err)=>{
             if (err){
                return next(err)
             }
@@ -100,15 +112,4 @@ module.exports = {
       }
    },
 
-   getLogout: (req, res)=>{
-      if(req.user){
-         res.destroy((err) => {
-            if (err)
-              console.log("Error : Failed to destroy the session during logout.", err);
-            req.user = null
-         })
-         req.logout(()=>{console.log("User has logged out.")})
-      }
-      res.redirect("/")
-   }
 }
