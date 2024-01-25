@@ -4,12 +4,13 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
+const bodyParser = require("body-parser")
 const methodOverride = require("method-override")
 const flash = require("express-flash")
 const logger = require('morgan')
 const connectDB = require('./config/database')
-const homeRoutes = require('./routes/home')
-const postRoutes = require("./routes/post")
+const homeRoutes = require('./routers/home')
+const postRoutes = require("./routers/post")
 
 
 require('dotenv').config({ path: './config/.env' })
@@ -27,6 +28,7 @@ app.use(express.json())
 app.use(logger("dev"))
 
 // Use forms for put / delete
+// app.use(bodyParser.urlencoded())
 app.use(methodOverride("_method"));
 
 // Sessions
@@ -48,7 +50,7 @@ require('./config/passport')(passport)
 
 // Set Routes For Which the server is listening
 app.use('/', homeRoutes)
-// app.use('/post', postRoutes)
+app.use('/post', postRoutes)
 
 // server Running
 app.listen(process.env.PORT, ()=>{
